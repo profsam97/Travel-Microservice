@@ -15,18 +15,20 @@
     "lint:flight-service": "cd ./microservices/flight-service && npm run lint:staged",
     "lint:api-gateway-service": "cd ./api-gateway && npm run lint:staged",
     "start": "npm-run-all -p start:auth-service start:user-service start:hotel-service start:flight-service start:api-gateway-service",
-    "start:auth-service": "cd ./microservices/auth-service && npm start &",
-    "start:user-service": "cd ./microservices/user-service && npm start  &",
-    "start:hotel-service": "cd ./microservices/hotel-service && npm start &",
-    "start:flight-service": "cd ./microservices/flight-service && npm start &",
-    "start:api-gateway-service": "cd ./api-gateway && npm start &"
+    "start:auth-service": "cd ./Micro-services/auths-service && npm start &",
+    "start:user-service": "cd ./Micro-services/users-service && npm start  &",
+    "start:hotel-service": "cd ./Micr-oservices/hotels-service && npm start &",
+    "start:flight-service": "cd ./Micro-services/flights-service && npm start &",
+    "start:api-gateway-service": "cd ./api-gateway-service && npm start &"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/profsam97/Travel-Microservice.git"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"
   },
   "author": "Oladejo Samuel",
-  "license": "ISC"
+  "license": "ISC",
+  "homepage": "https://github.com/profsam97/Travel-Microservice.git#readme"
 }
