@@ -40,7 +40,7 @@ Each service is containerized using **Docker**, ensuring consistent deployment a
 
 ### RabbitMQ Communication
 
-I use **RabbitMQ** as the message broker for communication between services. It ensures reliable and asynchronous communication.
+I made use of **RabbitMQ** as the message broker for communication between services. It ensures reliable and asynchronous communication.
 
 ### Different Databases
 
