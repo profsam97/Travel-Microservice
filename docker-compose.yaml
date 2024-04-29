@@ -69,7 +69,7 @@ services:
       - service-gateway
     environment:
       MONGODB_URL: "mongodb://root:example@mongo-db:27017/"
-      RABBITMQ_URL: "put rabbitmq url"
+      RABBITMQ_URL: "put rabbitmq url here"
       RABBITMQ_AUTH_QUEUE : 'put rabbit mq authQueue'
       RABBITMQ_HOTEL_QUEUE : 'put rabbit mq hotel queue'
 
