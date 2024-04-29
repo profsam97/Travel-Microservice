@@ -1,0 +1,134 @@
+version: "3.8"
+
+services:
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: ./api-gateway
+      target: development
+    ports:
+      - 8000:8000
+    restart: on-failure
+    depends_on:
+      - auth-service
+      - user-service
+      - hotel-service
+      - flight-service
+      - postgres-db
+      - mongo-db
+    networks:
+      - service-gateway
+      - postgres-db
+      - mongo-db
+
+  auth-service:
+    container_name: auth-microservice
+    build:
+      context: ./microservices/auth-service
+      target: development
+    ports:
+      - 8001:8000
+    restart: on-failure
+    depends_on:
+      - postgres-db
+      - mongo-db
+    networks:
+      - postgres-db
+      - service-gateway
+
+  user-service:
+    container_name: user-microservice
+    build:
+      context: ./microservices/user-service
+      target: development
+    ports:
+      - 8002:8000
+    restart: on-failure
+    depends_on:
+      - postgres-db
+      - mongo-db
+      - auth-service
+    networks:
+      - postgres-db
+      - service-gateway
+
+  hotel-service:
+    container_name: hotel-microservice
+    build:
+      context: ./microservices/hotel-service
+      target: development
+    ports:
+      - 8003:8000
+    restart: on-failure
+    depends_on:
+      - postgres-db
+      - mongo-db
+      - auth-service
+    networks:
+      - mongo-db
+      - service-gateway
+    environment:
+      MONGODB_URL: "mongodb://root:example@mongo-db:27017/"
+      RABBITMQ_URL: "put rabbitmq url"
+      RABBITMQ_AUTH_QUEUE : 'put rabbit mq authQueue'
+      RABBITMQ_HOTEL_QUEUE : 'put rabbit mq hotel queue'
+
+  flight-service:
+    container_name: flight-microservice
+    build:
+      context: ./microservices/flight-service
+      target: development
+    ports:
+      - 8004:8000
+    restart: on-failure
+    depends_on:
+      - postgres-db
+      - mongo-db
+      - auth-service
+    networks:
+      - mongo-db
+      - service-gateway
+    environment:
+      MONGODB_URL: "mongodb://root:example@mongo-db:27017/"
+      RABBITMQ_URL: "put rabbitmq url"
+      RABBITMQ_AUTH_QUEUE : 'put rabbit mq authQueue'
+      RABBITMQ_FLIGHT_QUEUE : 'put rabbit mq flightQueue'
+
+  postgres-db:
+    image: "postgres:13.5"
+    restart: "always"
+    networks:
+      - "postgres-db"
+    expose:
+      - "5432"
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+
+  mongo-db:
+    image: mongo:4.2.0
+    restart: always
+    networks:
+      - mongo-db
+    expose:
+      - "27017"
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: example
+
+networks:
+  service-gateway:
+  postgres-db:
+  mongo-db:
+
+volumes:
+  postgres:
+  mongo_data:
