@@ -24,7 +24,7 @@ services:
   auth-service:
     container_name: auth-microservice
     build:
-      context: ./microservices/auth-service
+      context: ./Micro-services/auths-service
       target: development
     ports:
       - 8001:8000
@@ -39,7 +39,7 @@ services:
   user-service:
     container_name: user-microservice
     build:
-      context: ./microservices/user-service
+      context: ./Micro-services/users-service
       target: development
     ports:
       - 8002:8000
@@ -55,7 +55,7 @@ services:
   hotel-service:
     container_name: hotel-microservice
     build:
-      context: ./microservices/hotel-service
+      context: ./Micro-services/hotels-service
       target: development
     ports:
       - 8003:8000
@@ -76,7 +76,7 @@ services:
   flight-service:
     container_name: flight-microservice
     build:
-      context: ./microservices/flight-service
+      context: ./Micro-services/flights-service
       target: development
     ports:
       - 8004:8000
