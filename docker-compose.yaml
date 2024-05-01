@@ -59,6 +59,7 @@ services:
       - postgres-db
       - mongo-db
       - auth-service
+      - api-gateway
     networks:
       - postgres-db
       - service-gateway
@@ -80,6 +81,7 @@ services:
       - postgres-db
       - mongo-db
       - auth-service
+      - api-gateway
     networks:
       - mongo-db
       - service-gateway
@@ -101,6 +103,7 @@ services:
       - postgres-db
       - mongo-db
       - auth-service
+      - api-gateway
     networks:
       - mongo-db
       - service-gateway
@@ -154,6 +157,7 @@ services:
       - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
     networks:
       - rabbitmq
+      
 networks:
   service-gateway:
   postgres-db:
