@@ -4,10 +4,10 @@ services:
   api-gateway:
     container_name: api-gateway
     build:
-      context: ./api-gateway
+      context: ./api-gateway-service
       target: development
     ports:
-      - 8000:8000
+      - "8000:8000"
     restart: on-failure
     depends_on:
       - auth-service
@@ -27,7 +27,7 @@ services:
       context: ./Micro-services/auths-service
       target: development
     ports:
-      - 8001:8000
+      - "8001:8000"
     restart: on-failure
     depends_on:
       - postgres-db
@@ -42,7 +42,7 @@ services:
       context: ./Micro-services/users-service
       target: development
     ports:
-      - 8002:8000
+      - "8002:8000"
     restart: on-failure
     depends_on:
       - postgres-db
@@ -58,7 +58,7 @@ services:
       context: ./Micro-services/hotels-service
       target: development
     ports:
-      - 8003:8000
+      - "8003:8000"
     restart: on-failure
     depends_on:
       - postgres-db
@@ -79,7 +79,7 @@ services:
       context: ./Micro-services/flights-service
       target: development
     ports:
-      - 8004:8000
+      - "8004:8000"
     restart: on-failure
     depends_on:
       - postgres-db
@@ -102,7 +102,7 @@ services:
     expose:
       - "5432"
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
@@ -117,7 +117,7 @@ services:
     expose:
       - "27017"
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
     environment:
