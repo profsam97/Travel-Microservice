@@ -20,6 +20,12 @@ services:
       - service-gateway
       - postgres-db
       - mongo-db
+    environment:
+      RABBITMQ_URL: "guest:guest@rabbitmq:5672"
+      RABBITMQ_FLIGHT_QUEUE: "flightQueue"
+      RABBITMQ_USER_QUEUE: "userQueue"
+      RABBITMQ_AUTH_QUEUE : 'authQueue'
+      RABBITMQ_HOTEL_QUEUE : 'hotelQueue'
 
   auth-service:
     container_name: auth-microservice
@@ -35,6 +41,11 @@ services:
     networks:
       - postgres-db
       - service-gateway
+    environment:
+      DATABASE_URL: "postgresql://guest:guest@postgres:5432/travel"
+      RABBITMQ_URL: "guest:guest@rabbitmq:5672"
+      RABBITMQ_AUTH_QUEUE : 'authQueue'
+      RABBITMQ_HOTEL_QUEUE : 'userQueue'
 
   user-service:
     container_name: user-microservice
@@ -51,6 +62,11 @@ services:
     networks:
       - postgres-db
       - service-gateway
+    environment:
+      DATABASE_URL: "postgresql://guest:guest@postgres:5432/travel"
+      RABBITMQ_URL: "guest:guest@rabbitmq:5672"
+      RABBITMQ_AUTH_QUEUE : 'authQueue'
+      RABBITMQ_USER_QUEUE : 'userQueue'
 
   hotel-service:
     container_name: hotel-microservice
@@ -69,9 +85,9 @@ services:
       - service-gateway
     environment:
       MONGODB_URL: "mongodb://root:example@mongo-db:27017/"
-      RABBITMQ_URL: "put rabbitmq url here"
-      RABBITMQ_AUTH_QUEUE : 'put rabbit mq authQueue'
-      RABBITMQ_HOTEL_QUEUE : 'put rabbit mq hotel queue'
+      RABBITMQ_URL: "guest:guest@rabbitmq:5672"
+      RABBITMQ_AUTH_QUEUE : 'authQueue'
+      RABBITMQ_HOTEL_QUEUE : 'hotelQueue'
 
   flight-service:
     container_name: flight-microservice
@@ -90,9 +106,9 @@ services:
       - service-gateway
     environment:
       MONGODB_URL: "mongodb://root:example@mongo-db:27017/"
-      RABBITMQ_URL: "put rabbitmq url"
-      RABBITMQ_AUTH_QUEUE : 'put rabbit mq authQueue'
-      RABBITMQ_FLIGHT_QUEUE : 'put rabbit mq flightQueue'
+      RABBITMQ_URL: "guest:guest@rabbitmq:5672"
+      RABBITMQ_AUTH_QUEUE : 'authQueue'
+      RABBITMQ_FLIGHT_QUEUE : 'flightQueue'
 
   postgres-db:
     image: "postgres:13.5"
@@ -106,8 +122,9 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "guest"
+      POSTGRES_PASSWORD: "guest"
+      POSTGRES_DB: "travel"
 
   mongo-db:
     image: mongo:4.2.0
@@ -124,6 +141,19 @@ services:
         MONGO_INITDB_ROOT_USERNAME: root
         MONGO_INITDB_ROOT_PASSWORD: example
 
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq  # Volume for RabbitMQ data
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+    networks:
+      - rabbitmq
 networks:
   service-gateway:
   postgres-db:
@@ -132,3 +162,5 @@ networks:
 volumes:
   postgres:
   mongo_data:
+  rabbitmq_data:
+

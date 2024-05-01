@@ -1,0 +1,24 @@
+{
+    "queues": [
+        {
+            "name": "authQueue",
+            "durable": true,
+            "auto_delete": false
+        },
+        {
+            "name": "userQueue",
+            "durable": true,
+            "auto_delete": false
+        },
+        {
+            "name": "flightQueue",
+            "durable": true,
+            "auto_delete": false
+        },
+        {
+            "name": "hotelQueue",
+            "durable": true,
+            "auto_delete": false
+        }
+    ]
+}
