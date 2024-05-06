@@ -57,7 +57,6 @@ services:
     restart: on-failure
     depends_on:
       - postgres-db
-      - mongo-db
       - auth-service
       - api-gateway
     networks:
