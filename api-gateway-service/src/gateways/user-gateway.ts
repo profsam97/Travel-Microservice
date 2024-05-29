@@ -72,7 +72,6 @@ export class UserGateway {
     @Body() dto: DeleteUserDto,
   ): Promise<void> {
     const deleteOptions = dto;
-    console.log(id);
     return await this.commonService.sendEvent(
       this.userService,
       { cmd: 'delete-user' },
