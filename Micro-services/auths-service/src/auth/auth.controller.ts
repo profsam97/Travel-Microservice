@@ -1,20 +1,14 @@
 // auth.controller.ts
 
-import { Controller, BadRequestException } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { SignupDto } from 'src/dto/signup.dto';
-import { SigninDto } from 'src/dto/signin.dto';
-import { ChangePasswordDto } from 'src/dto/changepass.dto';
-import {
-  Ctx,
-  MessagePattern,
-  Payload,
-  RmqContext,
-  RpcException,
-} from '@nestjs/microservices';
-import { CommonService } from 'src/utils/common';
-import { IMessage } from 'src/interfaces/message.interface';
-import { IAuthUser } from 'src/interfaces/user.interface';
+import {BadRequestException, Controller} from '@nestjs/common';
+import {AuthService} from './auth.service';
+import {SignupDto} from 'src/dto/signup.dto';
+import {SigninDto} from 'src/dto/signin.dto';
+import {ChangePasswordDto} from 'src/dto/changepass.dto';
+import {Ctx, MessagePattern, Payload, RmqContext, RpcException,} from '@nestjs/microservices';
+import {CommonService} from 'src/utils/common';
+import {IMessage} from 'src/interfaces/message.interface';
+import {IAuthUser} from 'src/interfaces/user.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -33,8 +27,7 @@ export class AuthController {
     this.commonService.acknowledgeMessage(context);
 
     try {
-      const result = await this.authService.signup(signUpDto);
-      return result;
+        return await this.authService.signup(signUpDto);
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw new RpcException({
@@ -76,8 +69,7 @@ export class AuthController {
     const { token } = data;
     this.commonService.acknowledgeMessage(context);
     try {
-      const result = await this.authService.verifyToken(token);
-      return result;
+        return await this.authService.verifyToken(token);
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw new RpcException({
