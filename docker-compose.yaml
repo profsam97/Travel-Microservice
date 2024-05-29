@@ -37,10 +37,16 @@ services:
     restart: on-failure
     depends_on:
       - postgres-db
-      - mongo-db
+      - api-gateway
     networks:
       - postgres-db
       - service-gateway
+    command: >
+        sh -c "
+        npx prisma migrate deploy &&
+        npx prisma generate &&
+        npm start 
+        "
     environment:
       DATABASE_URL: "postgresql://guest:guest@postgres:5432/travel"
       RABBITMQ_URL: "guest:guest@rabbitmq:5672"
@@ -62,6 +68,12 @@ services:
     networks:
       - postgres-db
       - service-gateway
+    command: >
+        sh -c  "     
+        npx prisma migrate deploy &&
+        npx prisma generate && 
+        npm start
+        "
     environment:
       DATABASE_URL: "postgresql://guest:guest@postgres:5432/travel"
       RABBITMQ_URL: "guest:guest@rabbitmq:5672"
@@ -77,8 +89,8 @@ services:
       - "8003:8000"
     restart: on-failure
     depends_on:
-      - postgres-db
       - mongo-db
+      - user
       - auth-service
       - api-gateway
     networks:
@@ -99,7 +111,7 @@ services:
       - "8004:8000"
     restart: on-failure
     depends_on:
-      - postgres-db
+      - user-service
       - mongo-db
       - auth-service
       - api-gateway
@@ -113,7 +125,7 @@ services:
       RABBITMQ_FLIGHT_QUEUE : 'flightQueue'
 
   postgres-db:
-    image: "postgres:13.5"
+    image: "postgres"
     restart: "always"
     networks:
       - "postgres-db"
@@ -129,7 +141,7 @@ services:
       POSTGRES_DB: "travel"
 
   mongo-db:
-    image: mongo:4.2.0
+    image: mongo:latest
     restart: always
     networks:
       - mongo-db
