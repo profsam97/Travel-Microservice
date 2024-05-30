@@ -42,7 +42,7 @@ services:
         npm start 
         "
     environment:
-      DATABASE_URL: "postgresql://guest:guest@postgres:5432/travel"
+      DATABASE_URL: "postgresql://guest:guest@postgres-db:5432/travel"
       RABBITMQ_URL: "guest:guest@rabbitmq:5672"
       RABBITMQ_AUTH_QUEUE : 'authQueue'
       RABBITMQ_HOTEL_QUEUE : 'userQueue'
@@ -70,7 +70,7 @@ services:
         npm start
         "
     environment:
-      DATABASE_URL: "postgresql://guest:guest@postgres:5432/travel"
+      DATABASE_URL: "postgresql://guest:guest@postgres-db:5432/travel"
       RABBITMQ_URL: "guest:guest@rabbitmq:5672"
       RABBITMQ_AUTH_QUEUE : 'authQueue'
       RABBITMQ_USER_QUEUE : 'userQueue'
