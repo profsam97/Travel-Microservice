@@ -11,8 +11,8 @@ RUN npm run build
 FROM node:18 
 
 WORKDIR /usr/src/app
-COPY --from=development /usr/src/app/dist ./dist
+COPY --from=development /usr/src/app .
 
-CMD ["node", "./dist/main.js"]
+CMD ["npm", "start"]
 
 
