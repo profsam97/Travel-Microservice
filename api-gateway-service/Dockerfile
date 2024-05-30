@@ -11,8 +11,6 @@ RUN npm run build
 FROM node:18 
 
 WORKDIR /usr/src/app
-COPY package.json ./
-RUN npm ci --prod 
 COPY --from=development /usr/src/app/dist ./dist
 
 CMD ["node", "./dist/main.js"]
