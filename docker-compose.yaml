@@ -92,7 +92,7 @@ services:
     restart: on-failure
     depends_on:
       - mongo-db
-      - user
+      - user-service
       - auth-service
       - api-gateway
     networks:
