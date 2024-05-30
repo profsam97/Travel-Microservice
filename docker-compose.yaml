@@ -90,6 +90,10 @@ services:
       - user-service
       - auth-service
       - api-gateway
+    command:  >
+        sh -c "
+          npm start
+        "
     networks:
       - mongo-db
       - service-gateway
@@ -114,6 +118,10 @@ services:
       - auth-service
       - api-gateway
       - rabbitmq
+    command : >
+        sh -c "
+          npm start
+        " 
     networks:
       - mongo-db
       - service-gateway
