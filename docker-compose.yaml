@@ -10,12 +10,7 @@ services:
       - "8000:8000"
     restart: on-failure
     depends_on:
-      - auth-service
-      - user-service
-      - hotel-service
-      - flight-service
-      - postgres-db
-      - mongo-db
+      - rabbitmq
     networks:
       - service-gateway
       - postgres-db
