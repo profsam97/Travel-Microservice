@@ -14,9 +14,7 @@ services:
     depends_on:
       - rabbitmq
     networks:
-      - service-gateway
-      - postgres-db
-      - mongo-db
+      - rabbitmq
     environment:
       RABBITMQ_URL: "guest:guest@rabbitmq:5672"
       RABBITMQ_FLIGHT_QUEUE: "flightQueue"
