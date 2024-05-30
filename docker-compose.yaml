@@ -41,6 +41,7 @@ services:
     networks:
       - postgres-db
       - service-gateway
+      - rabbitmq
     command: >
         sh -c "
         npx prisma migrate deploy &&
@@ -68,6 +69,7 @@ services:
     networks:
       - postgres-db
       - service-gateway
+      - rabbitmq
     command: >
         sh -c  "     
         npx prisma migrate deploy &&
@@ -96,6 +98,7 @@ services:
     networks:
       - mongo-db
       - service-gateway
+      - rabbitmq
     environment:
       MONGODB_URL: "mongodb://root:example@mongo-db:27017/"
       RABBITMQ_URL: "guest:guest@rabbitmq:5672"
@@ -115,9 +118,11 @@ services:
       - mongo-db
       - auth-service
       - api-gateway
+      - rabbitmq
     networks:
       - mongo-db
       - service-gateway
+      - rabbitmq
     environment:
       MONGODB_URL: "mongodb://root:example@mongo-db:27017/"
       RABBITMQ_URL: "guest:guest@rabbitmq:5672"
@@ -141,7 +146,7 @@ services:
       POSTGRES_DB: "travel"
 
   mongo-db:
-    image: mongo:latest
+    image: mongo
     restart: always
     networks:
       - mongo-db
@@ -173,6 +178,7 @@ networks:
   service-gateway:
   postgres-db:
   mongo-db:
+  rabbitmq:
 
 volumes:
   postgres:
