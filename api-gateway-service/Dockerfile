@@ -11,8 +11,7 @@ RUN npm run build
 FROM base AS production
 
 WORKDIR /usr/src/app
-COPY package.json ./
-RUN npm ci --prod 
+
 COPY --from=development /usr/src/app/dist ./dist
 
 CMD ["node", "./dist/main.js"]
