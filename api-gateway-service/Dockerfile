@@ -8,7 +8,7 @@ COPY . .
 RUN npm run build
 
 # production stage
-FROM base AS production
+FROM node:18 
 
 WORKDIR /usr/src/app
 COPY package.json ./
